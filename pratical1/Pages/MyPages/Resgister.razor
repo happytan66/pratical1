@@ -1,0 +1,90 @@
+﻿@page "/SignUp"
+
+@using DataAccessLibrary
+@using DataAccessLibrary.Models
+@using pratical1.Models
+
+@inject IPeopleData _db
+@inject NavigationManager NavManager
+
+
+
+<h4>Sign Up</h4>
+<EditForm Model="@newPerson" OnValidSubmit="@SignUp">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <div>
+        <br />
+        <br />
+        <br />
+        <br />
+        <div class="col-12 row">
+            <input class="form-control col-12" @bind="newPerson.FirstName" placeholder="First Name" />
+            <br />
+            <br />
+            <input class="form-control col-12" @bind="newPerson.LastName" placeholder="Last Name" />
+            <br />
+            <br />
+            <input class="form-control col-12" @bind="newPerson.EmailAddreess" placeholder="Email Address" />
+            <br />
+            <br />
+            <input class="form-control col-12" @bind="newPerson.password" type="password" placeholder="Password" />
+            <br />
+            <br />
+            <input class="form-control col-12" @bind="newPerson.Confirmpassword" type="password" placeholder="Confirm Password" />
+        </div>
+    </div>
+
+
+    <br />
+    <br />
+    <br />
+    <button type="submit" class="btn btn-primary">Sign Up</button>
+
+</EditForm>
+
+
+
+
+
+@code {
+    private List<PersonModel> people;
+    private DisplayPersonModel newPerson = new DisplayPersonModel();
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        people = await _db.GetPeople();
+
+    }
+
+
+
+
+    private async Task SignUp()
+    {
+
+        PersonModel p = new PersonModel
+        {
+
+            FirstName = newPerson.FirstName,
+            LastName = newPerson.LastName,
+            EmailAddress = newPerson.EmailAddreess,
+            password = newPerson.password,
+
+        };
+
+
+        await _db.InsertPerson(p);
+
+        people.Add(p);
+
+        newPerson = new DisplayPersonModel();
+
+        //redirect to another page
+        NavManager.NavigateTo("/Counter");
+    
+
+     }
+}

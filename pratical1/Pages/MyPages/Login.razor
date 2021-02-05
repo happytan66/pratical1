@@ -1,0 +1,84 @@
+﻿@page "/login"
+
+
+@using DataAccessLibrary
+@using DataAccessLibrary.Models
+@using pratical1.Models
+@using System.Data.SqlClient
+@using System.Linq
+@inject IPeopleData _db
+@inject NavigationManager NavManager
+
+<h3>Login</h3>
+
+<EditForm Model="@newPerson" OnValidSubmit="@login">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <div>
+        <br />
+        <br />
+        <br />
+        <br />
+        <div class="col-12 row">
+            <input class="form-control col-12" @bind="newPerson.EmailAddreess" placeholder="Email Address" />
+            <br />
+            <br />
+            <input class="form-control col-12" @bind="newPerson.password" type="password" placeholder="Password" />
+            <br />
+        </div>
+    </div>
+
+    <br />
+    <br />
+    <br />
+    <button type="submit" class="btn btn-primary">Sign In</button>
+
+</EditForm>
+
+
+
+
+
+@code {
+    //   DatabaseDBDataContext db = new DatabaseDBDataContext();
+
+    private List<PersonModel> people;
+    private DisplayPersonModel newPerson = new DisplayPersonModel();
+
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        people = await _db.VerifyUser();
+
+    }
+
+
+    private async Task login()
+    {
+        PersonModel a = new PersonModel
+        {
+
+            EmailAddress = newPerson.EmailAddreess,
+            password = newPerson.password,
+        };
+
+        await _db.VerifyUser();
+
+        //redirect to another page
+        NavManager.NavigateTo("/Counter");
+    }
+
+
+
+
+
+        }
+    }
+
+
+   
+     }
+
+
