@@ -32,7 +32,7 @@ namespace pratical1
             services.AddServerSideBlazor();
             services.AddSingleton<WeatherForecastService>();
             services.AddTransient<ISqlDataAccess, SqlDataAccess>();
-            services.AddTransient<IPeopleData, PeopleData>();
+            services.AddScoped<IPersonServices, PersonSqlServices>();
             services.AddTransient<IJwtTokenService, JwtTokenService>();
             services.AddMvc(options => options.EnableEndpointRouting = false);
             services.AddResponseCompression();

@@ -1,17 +1,16 @@
 ﻿@page "/login"
 
 
-@using DataAccessLibrary
+@*@using DataAccessLibrary
 @using DataAccessLibrary.Models
 @using pratical1.Models
 @using System.Data.SqlClient
 @using System.Linq
-@inject IPeopleData _db
-@inject NavigationManager NavManager
+@inject NavigationManager NavManager*@
 
 <h3>Login</h3>
 
-<EditForm Model="@newPerson" OnValidSubmit="@login">
+<EditForm Model="@personData" OnValidSubmit="@LoginAttempt">
     <DataAnnotationsValidator />
     <ValidationSummary />
 
@@ -21,10 +20,10 @@
         <br />
         <br />
         <div class="col-12 row">
-            <input class="form-control col-12" @bind="newPerson.EmailAddreess" placeholder="Email Address" />
+            <input class="form-control col-12" @bind="personData.EmailAddress" placeholder="Email Address" />
             <br />
             <br />
-            <input class="form-control col-12" @bind="newPerson.password" type="password" placeholder="Password" />
+            <input class="form-control col-12" @bind="personData.Password" type="password" placeholder="Password" />
             <br />
         </div>
     </div>
@@ -40,7 +39,7 @@
 
 
 
-@code {
+@*@code {
     //   DatabaseDBDataContext db = new DatabaseDBDataContext();
 
     private List<PersonModel> people;
@@ -79,6 +78,6 @@
 
 
    
-     }
+     }*@
 
 
